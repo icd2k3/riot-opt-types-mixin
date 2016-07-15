@@ -1,8 +1,8 @@
-import { optTypes } from '../src/riot-opt-types-mixin.js';
+import { optTypes } from '../lib/riot-opt-types-mixin.js';
 import './test.tag';
 
 describe('riot-opt-types-mixin tests', () => {
-    const getPrimitiveError = (optName) => {
+    const getIsRequiredError = (optName) => {
         return new Error(
             `Required opt \`${optName}\` was not specified in `
             + `\`test-tag\`.`
@@ -53,14 +53,14 @@ describe('riot-opt-types-mixin tests', () => {
 
     it('Should display errors if opts are required, but not provided to the tag from parent', (done) => {
         const expectedErrors = [
-            getPrimitiveError('arrayTest'),
-            getPrimitiveError('boolTest'),
-            getPrimitiveError('funcTest'),
-            getPrimitiveError('numberTest'),
-            getPrimitiveError('objectTest'),
-            getPrimitiveError('oneOfTest'),
-            getPrimitiveError('shapeTest'),
-            getPrimitiveError('stringTest')
+            getIsRequiredError('arrayTest'),
+            getIsRequiredError('boolTest'),
+            getIsRequiredError('funcTest'),
+            getIsRequiredError('numberTest'),
+            getIsRequiredError('objectTest'),
+            getIsRequiredError('oneOfTest'),
+            getIsRequiredError('shapeTest'),
+            getIsRequiredError('stringTest')
         ];
 
         tag = riot.mount(tagDom, 'test-tag', {

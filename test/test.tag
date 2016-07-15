@@ -1,4 +1,4 @@
-import riotOptTypesMixin from '../src/riot-opt-types-mixin.js';
+import riotOptTypesMixin from '../lib/riot-opt-types-mixin.js';
 
 <test-tag>
     <script type="babel">

@@ -1,29 +1,32 @@
 {
-  "name": "riot-opt-types",
+  "name": "riot-opt-types-mixin",
   "version": "1.0.0",
   "description": "Like React component PropTypes, but for Riot tags",
-  "main": "src/riot-opt-types.js",
+  "files": [
+    "lib/riot-opt-types-mixin.js"
+  ],
+  "main": "lib/riot-opt-types-mixin.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack --watch",
     "test": "./node_modules/.bin/karma start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/icd2k3/riot-opt-types.git"
+    "url": "git+https://github.com/icd2k3/riot-opt-types-mixin.git"
   },
   "keywords": [
     "Riot",
     "PropTypes",
     "Opts",
     "OptTypes",
-    "React"
+    "Mixin"
   ],
   "author": "Justin Schrader",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/icd2k3/riot-opt-types/issues"
+    "url": "https://github.com/icd2k3/riot-opt-types-mixin/issues"
   },
-  "homepage": "https://github.com/icd2k3/riot-opt-types#readme",
+  "homepage": "https://github.com/icd2k3/riot-opt-types-mixin#readme",
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.10.4",
@@ -57,7 +60,6 @@
     "riot": "^2.5.0",
     "riotjs-loader": "^3.0.0",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0"
+    "webpack-dev-server": "^1.14.1"
   }
 }

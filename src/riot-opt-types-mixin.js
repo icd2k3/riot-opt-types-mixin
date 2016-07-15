@@ -1,8 +1,30 @@
+/**
+* This is a slightly trimmed down port of React's PropTypes bundled as a riotjs mixin.
+*
+* Source of type checkers (React):
+*   - https://github.com/facebook/react/blob/master/src/isomorphic/classic/types/ReactPropTypes.js
+*
+* Usage:
+*   import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
+*   <tag>
+*       <script>
+*           this.optTypes = {
+*               name: optTypes.string.isRequired
+*           };
+*           this.mixin(riotOptTypesMixin);
+*       </script>
+*       <h1>Hello, {opts.name}</h1>
+*   </tag>
+*/
+
+// used for local dev tests
 const isTestEnv = window.__env && window.__env.NODE_ENV === 'test';
 
+// keep track of current errors and previous opts in root scope
 let prevOpts,
     errors;
 
+// riotjs mixin
 export default {
     init: function init() {
         const tagName = this.opts.dataIs,
@@ -23,7 +45,7 @@ export default {
                             console.error(error);
                         }
 
-                        if (isTestEnv && errors && errors.length) {
+                        if (errors && errors.length) {
                             errors.push(error.toString());
                         } else {
                             errors = [error.toString()];
@@ -36,7 +58,7 @@ export default {
             console.error(
                 new Error(
                     `optTypes object was not set in the tag <${tagName}> `
-                    + `and is expected when using the mixin riot-opt-types-mixin.`
+                    + 'and is expected when using the mixin riot-opt-types-mixin.'
                 )
             );
         }
@@ -66,6 +88,7 @@ export default {
     }
 };
 
+// getOptType ported from React PropTypes source
 function getOptType(optValue) {
     const optType = typeof optValue;
 
@@ -78,6 +101,7 @@ function getOptType(optValue) {
     return optType;
 }
 
+// get precisce type ported from React PropTypes source
 function getPreciseType(optValue) {
     const optType = getOptType(optValue);
 
@@ -91,6 +115,7 @@ function getPreciseType(optValue) {
     return optType;
 }
 
+// create chainable type checker ported from React PropTypes source
 function createChainableTypeChecker(validate) {
     function checkType(
         isRequired,
@@ -122,6 +147,7 @@ function createChainableTypeChecker(validate) {
     return chainedCheckType;
 }
 
+// create primitive checker ported from React PropTypes source
 function createPrimitiveTypeChecker(expectedType) {
     function validate(
         opts,
@@ -145,6 +171,7 @@ function createPrimitiveTypeChecker(expectedType) {
     return createChainableTypeChecker(validate);
 }
 
+// create shape checker ported from React PropTypes source
 function createShapeTypeChecker(shapeTypes) {
     function validate(
         opts,
@@ -178,6 +205,7 @@ function createShapeTypeChecker(shapeTypes) {
     return createChainableTypeChecker(validate);
 }
 
+// create one of type checker ported from React PropTypes source
 function createOneOfTypeChecker(expectedValues) {
     if (!Array.isArray(expectedValues)) {
         console.error('Invalid argument supplied to oneOf, expected an instance of array.');
@@ -205,8 +233,56 @@ function createOneOfTypeChecker(expectedValues) {
     return createChainableTypeChecker(validate);
 }
 
-export const optTypes = {
+// any type checker ported from React PropTypes source
+function createAnyTypeChecker() {
+    return createChainableTypeChecker(() => {
+        return null;
+    });
+}
+
+// array type checker ported from React PropTypes source
+function createArrayOfTypeChecker(typeChecker) {
+    function validate(
+        opts,
+        optName,
+        tagName
+    ) {
+        if (typeof typeChecker !== 'function') {
+            return new Error(
+                `opt \`${optName}\` of tag \`${tagName}\` has invalid optType notation inside arrayOf.`
+            );
+        }
+        const optValue = opts[optName];
+
+        if (!Array.isArray(optValue)) {
+            const optType = getOptType(optValue);
+
+            return new Error(
+                `Invalid opt \`${optName}\` of type `
+                + `\`${optType}\` supplied to \`${tagName}\`, expected an array.`
+            );
+        }
+        for (let i = 0; i < optValue.length; i++) {
+            const error = typeChecker(
+                `${optValue} at index ${i}`,
+                i,
+                tagName
+            );
+
+            if (error instanceof Error) {
+                return error;
+            }
+        }
+        return null;
+    }
+    return createChainableTypeChecker(validate);
+}
+
+// all supported optTypes - imported as a sub-module ex: import { optTypes } from 'riot-opt-types-mixin'
+module.exports.optTypes = {
+    any: createAnyTypeChecker(),
     array: createPrimitiveTypeChecker('array'),
+    arrayOf: createArrayOfTypeChecker,
     bool: createPrimitiveTypeChecker('boolean'),
     func: createPrimitiveTypeChecker('function'),
     number: createPrimitiveTypeChecker('number'),

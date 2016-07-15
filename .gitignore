@@ -1,6 +1,10 @@
+#dirs
 /node_modules/
 /dist/
 /test-coverage-report/
+
+# files
 npm-debug.log
 *.sublime-project
 *.sublime-workspace
+*.tgz
