@@ -4,7 +4,7 @@ export default {
 
         if (!this.optTypes) {
             console.error(
-                `optTypes object was not set in the tag "${tagName}" and is expected when using riot-opt-types-mixin`
+                `optTypes object was not set in the tag <${tagName}> and is expected when using the mixin riot-opt-types-mixin.`
             );
         }
 

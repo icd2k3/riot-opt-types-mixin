@@ -4,12 +4,10 @@ import riotOptTypesMixin, { optTypes } from '../src/riot-opt-types-mixin.js';
     <script type="babel">
 
         console.log('---->');
-        console.log(riotOptTypesMixin);
-        console.log(optTypes);
-
-        this.on('mount', () => {
-            console.log('mounted');
-        });
+        console.log(opts);
+        console.log(opts.testopt);
+        console.log('-------<');
+        //console.log(optTypes);
 
         /*this.optTypes = {
             testopt: optTypes.bool.isRequired
