@@ -7,19 +7,19 @@
 ## Usage
 Define `this.optTypes = {}` in your riotjs tag, then include riot-opt-types-mixin as a mixin like so:
 
-    ```javascript
+``` html
 import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
-
+        
 <my-tag>
-    <script>
-        this.optTypes = {
-            name: optTypes.string.isRequired
-        };
-        this.mixin(riotOptTypesMixin);
-    </script>
-    <h1>Hello, {opts.name}</h1>
+    this.optTypes = {
+        name: optTypes.string.isRequired
+    };
+    this.mixin(riotOptTypesMixin);
+    
+    <div>Hello, {opts.name}</div>
 </my-tag>
-    ```
+```
+
 
 ## Supported optTypes
 #### any
