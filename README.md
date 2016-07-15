@@ -7,7 +7,7 @@
 ## Usage
 Define `this.optTypes = {}` in your riotjs tag, then include riot-opt-types-mixin as a mixin like so:
 
-``` html
+``` javascript
 import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
         
 <my-tag>
@@ -16,7 +16,7 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
     };
     this.mixin(riotOptTypesMixin);
     
-    <div>Hello, {opts.name}</div>
+    <h1>Hello, {opts.name}</h1>
 </my-tag>
 ```
 
