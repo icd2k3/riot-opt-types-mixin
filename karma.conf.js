@@ -6,7 +6,7 @@ module.exports = function(config) {
             'node_modules/babel-polyfill/dist/polyfill.js',
             'test/**/*.tag',
             'test/**/*.js',
-            'lib/riot-opt-types.js'
+            'src/riot-opt-types-mixin.js'
         ],
         frameworks: [
             'commonjs',
@@ -17,7 +17,7 @@ module.exports = function(config) {
         preprocessors: {
             'test/**/*.tag': ['riot', 'babel', 'commonjs'],
             'test/**/*.js': ['babel', 'commonjs'],
-            'lib/riot-opt-types.js': ['commonjs']
+            'src/riot-opt-types-mixin.js': ['babel', 'commonjs']
         },
         babelPreprocessor: {
             options: {
@@ -41,10 +41,6 @@ module.exports = function(config) {
             options: {
                 type: 'babel'
             }
-        },
-        //failOnEmptyTestSuite: false,
-       // singleRun: true
-        //,
-        //logLevel: 'debug'
+        }
     })
 }

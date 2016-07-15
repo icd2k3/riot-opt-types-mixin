@@ -1,7 +1,21 @@
-import optTypes from '../lib/riot-opt-types.js';
+import './test.tag';
 
-describe('optTypes', () => {
+describe('riot-opt-types-mixin tests', () => {
+    let tagDom,
+        tag
+
+    beforeEach(() => {
+        tagDom = document.createElement('div');
+        document.body.appendChild(tagDom);
+    });
+
+    afterEach(function() {
+        if (tag) {
+            tag.unmount();
+        }
+    })
+
     it('Example', (done) => {
-        console.log(optTypes);
+        tag = riot.mount(tagDom, 'test-primitive', { testbool: null })[0];
     });
 });

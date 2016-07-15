@@ -1,28 +1,35 @@
-export default (obj, tag) => {
-    return {
-        init: () => {
-            let prevOpts;
+export default {
+    init: function init() {
+        const tagName = this.opts.dataIs;
 
-            if (!tag.tagName) {
-                console.warn('optTypes: expected tag to have tagName parameter assigned.');
+        if (!this.optTypes) {
+            console.error(
+                `optTypes object was not set in the tag "${tagName}" and is expected when using riot-opt-types-mixin`
+            );
+        }
+
+        if (this.defaultOptTypes) {
+            this.opts = Object.assign({}, this.opts, this.defaultOptTypes);
+        }
+
+        let prevOpts;
+
+        this.on('updated', function updated() {
+            if (prevOpts && JSON.stringify(prevOpts) === JSON.stringify(this.opts)) {
+                return;
             }
 
-            tag.on('updated', () => {
-                if (prevOpts && JSON.stringify(prevOpts) === JSON.stringify(tag.opts)) {
-                    return;
-                }
-                prevOpts = Object.assign({}, tag.opts);
+            prevOpts = Object.assign({}, this.opts);
 
-                for (const key in obj) {
-                    const error = obj[key](tag.opts, key, tag.tagName || '[undefined tagName]');
+            for (const key in this.optTypes) {
+                const error = this.optTypes[key](this.opts, key, tagName);
 
-                    if (error) {
-                        console.error(error);
-                    }
+                if (error) {
+                    console.error(error);
                 }
-            });
-        }
-    };
+            }
+        });
+    }
 };
 
 function getOptType(optValue) {
@@ -82,6 +89,8 @@ function createChainableTypeChecker(validate) {
 }
 
 function createPrimitiveTypeChecker(expectedType) {
+
+    console.log('create');
     function validate(
         opts,
         optName,
@@ -164,12 +173,13 @@ function createOneOfTypeChecker(expectedValues) {
     return createChainableTypeChecker(validate);
 }
 
-export const
-    array  = createPrimitiveTypeChecker('array'),
-    bool   = createPrimitiveTypeChecker('boolean'),
-    func   = createPrimitiveTypeChecker('function'),
-    number = createPrimitiveTypeChecker('number'),
-    object = createPrimitiveTypeChecker('object'),
-    oneOf  = createOneOfTypeChecker,
-    shape  = createShapeTypeChecker,
-    string = createPrimitiveTypeChecker('string');
+export const optTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    oneOf: createOneOfTypeChecker,
+    shape: createShapeTypeChecker,
+    string: createPrimitiveTypeChecker('string')
+};

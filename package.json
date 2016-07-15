@@ -4,7 +4,7 @@
   "description": "Like React component PropTypes, but for Riot tags",
   "main": "src/riot-opt-types.js",
   "scripts": {
-    "dist": "./node_modules/.bin/webpack",
+    "start": "./node_modules/.bin/webpack --watch",
     "test": "./node_modules/.bin/karma start"
   },
   "repository": {
