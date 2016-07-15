@@ -44,8 +44,8 @@ module.exports = function(config) {
         reporters: ['mocha', 'progress', 'coverage'],
         coverageReporter: {
             type: 'html',
-            dir: 'test/',
-            subdir: 'coverage/'
+            dir: 'test-coverage-report/',
+            subdir: 'report'
         },
         commonjsPreprocessor: {
             modulesRoot: 'test'
