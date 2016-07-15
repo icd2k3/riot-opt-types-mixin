@@ -1,10 +1,43 @@
+const isTestEnv = window.__env && window.__env.NODE_ENV === 'test';
+
+let prevOpts,
+    errors;
+
 export default {
     init: function init() {
-        const tagName = this.opts.dataIs;
+        const tagName = this.opts.dataIs,
+            validateOpts = () => {
+                errors = null;
+
+                if (prevOpts && JSON.stringify(prevOpts) === JSON.stringify(this.opts)) {
+                    return;
+                }
+
+                prevOpts = Object.assign({}, this.opts);
+
+                for (const key in this.optTypes) {
+                    const error = this.optTypes[key](this.opts, key, tagName);
+
+                    if (error) {
+                        if (!isTestEnv) {
+                            console.error(error);
+                        }
+
+                        if (isTestEnv && errors && errors.length) {
+                            errors.push(error.toString());
+                        } else {
+                            errors = [error.toString()];
+                        }
+                    }
+                }
+            };
 
         if (!this.optTypes) {
             console.error(
-                `optTypes object was not set in the tag <${tagName}> and is expected when using the mixin riot-opt-types-mixin.`
+                new Error(
+                    `optTypes object was not set in the tag <${tagName}> `
+                    + `and is expected when using the mixin riot-opt-types-mixin.`
+                )
             );
         }
 
@@ -12,23 +45,24 @@ export default {
             this.opts = Object.assign({}, this.opts, this.defaultOptTypes);
         }
 
-        let prevOpts;
-
-        this.on('updated', function updated() {
-            if (prevOpts && JSON.stringify(prevOpts) === JSON.stringify(this.opts)) {
-                return;
-            }
-
-            prevOpts = Object.assign({}, this.opts);
-
-            for (const key in this.optTypes) {
-                const error = this.optTypes[key](this.opts, key, tagName);
-
-                if (error) {
-                    console.error(error);
-                }
-            }
+        validateOpts();
+        this.on('updated', validateOpts);
+        this.on('unmount', () => {
+            errors = null;
+            prevOpts = null;
         });
+    },
+    getRiotOptTypesMixinErrors: () => {
+        if (!isTestEnv) {
+            console.warn('The getRiotOptTypesMixinErrors function is only intended to be used for testing purposes');
+        }
+        return errors;
+    },
+    getRiotOptTypesPrevOpts: () => {
+        if (!isTestEnv) {
+            console.warn('The getRiotOptTypesPrevOpts function is only intended to be used for testing purposes');
+        }
+        return prevOpts;
     }
 };
 
@@ -89,8 +123,6 @@ function createChainableTypeChecker(validate) {
 }
 
 function createPrimitiveTypeChecker(expectedType) {
-
-    console.log('create');
     function validate(
         opts,
         optName,

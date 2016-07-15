@@ -9,6 +9,7 @@ module.exports = function(config) {
             'src/riot-opt-types-mixin.js'
         ],
         frameworks: [
+            'env',
             'commonjs',
             'mocha',
             'chai',
@@ -24,7 +25,13 @@ module.exports = function(config) {
                 presets: ['es2015']
             },
         },
+        client: {
+            env: {
+                NODE_ENV: 'test'
+            }
+        },
         plugins: [
+            'karma-env',
             'karma-babel-preprocessor',
             'karma-commonjs',
             'karma-mocha',

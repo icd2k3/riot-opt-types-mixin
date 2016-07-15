@@ -1,18 +1,10 @@
-import riotOptTypesMixin, { optTypes } from '../src/riot-opt-types-mixin.js';
+import riotOptTypesMixin from '../src/riot-opt-types-mixin.js';
 
-<test-primitive>
+<test-tag>
     <script type="babel">
-
-        console.log('---->');
-        console.log(opts);
-        console.log(opts.testopt);
-        console.log('-------<');
-        //console.log(optTypes);
-
-        /*this.optTypes = {
-            testopt: optTypes.bool.isRequired
-        };*/
+        this.optTypes = opts.optTypes;
         this.mixin(riotOptTypesMixin);
+        this.riotOptTypesMixinErrors = this.getRiotOptTypesMixinErrors();
     </script>
     <div>Test</div>
-</test-primitive>
+</test-tag>
