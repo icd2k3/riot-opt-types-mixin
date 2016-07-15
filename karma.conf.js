@@ -18,7 +18,7 @@ module.exports = function(config) {
         preprocessors: {
             'test/**/*.tag': ['riot', 'babel', 'commonjs'],
             'test/**/*.js': ['babel', 'commonjs'],
-            'src/riot-opt-types-mixin.js': ['babel', 'commonjs']
+            'src/riot-opt-types-mixin.js': ['babel', 'commonjs', 'coverage']
         },
         babelPreprocessor: {
             options: {
@@ -34,13 +34,19 @@ module.exports = function(config) {
             'karma-env',
             'karma-babel-preprocessor',
             'karma-commonjs',
+            'karma-coverage',
             'karma-mocha',
             'karma-chai',
             'karma-mocha-reporter',
             'karma-phantomjs-launcher',
             'karma-riot'
         ],
-        reporters: ['mocha'],
+        reporters: ['mocha', 'progress', 'coverage'],
+        coverageReporter: {
+            type: 'html',
+            dir: 'test/',
+            subdir: 'coverage/'
+        },
         commonjsPreprocessor: {
             modulesRoot: 'test'
         },
