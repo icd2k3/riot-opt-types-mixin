@@ -31,11 +31,25 @@ In this case the console would print this error:
 
 `Invalid opt 'name' of type 'number' supplied to 'my-tag', expected 'string'.`
 
-## Full Example
-TODO
+## Supported `optTypes`
+- optTypes.any
+- optTypes.arrayOf
+- optTypes.array
+- optTypes.bool
+- optTypes.func
+- optTypes.instanceOf
+- optTypes.node
+- optTypes.number
+- optTypes.objectOf
+- optTypes.object
+- optTypes.oneOf
+- optTypes.oneOfType
+- optTypes.shape
+- optTypes.string
 
-## Documentation
-Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html). This mixin feature all the same optTypes <strong>except</strong> for "element" which validates React components. I plan on appending a "tag" checker soon for Riot.
+Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) if you have any questions about how these function.
+
+This mixin feature all the same `optTypes` listed in React's documentation <strong>except</strong> for `element` which validates React components. I plan on appending a "tag" checker soon for Riot.
 
 ## Why?
 I'm a big fan of this functionality in [React](https://facebook.github.io/react/) and wanted to be able to utilize it in [Riot](http://riotjs.com) apps.
@@ -43,12 +57,12 @@ I'm a big fan of this functionality in [React](https://facebook.github.io/react/
 This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to be very strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
 
 ## Size
-Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is only benefitial for local development, so you could trim it out for deployment builds.
+Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is only benefitial for local development, so you can (and probably should) trim it out for deployment builds. (TODO: add documentation about how to do this...)
 
 ## Contributing
 Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
 
-To develop locally, clone this repo and run `npm run start` to compile /src -> /lib and run `npm run test` to run the unit tests. 
+To develop locally, clone this repo and run `npm run start` to compile /src -> /lib and run `npm run ` to run the unit s. 
 
 ## Thanks
 Most of the functionality is a direct port of React's [PropTypes](https://github.com/facebook/react/blob/master/src/isomorphic/classic/types/ReactPropTypes.js).
