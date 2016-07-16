@@ -22,6 +22,9 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
 </my-tag>
 ```
 
+## Full Example
+TODO
+
 ## Documentation
 Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html). This mixin feature all the same optTypes <strong>except</strong> for "element" which validates React components. I plan on appending a "tag" checker soon for Riot.
 
@@ -36,8 +39,7 @@ Compressed this mixin clocks in at about 6kb <strong>BUT<strong>, really it is o
 ## Contributing
 Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
 
-#### Developing Locally
-Clone this repo and run `npm run start` to compile /src to /lib and run `npm run test` to run unit tests. 
+To develop locally, clone this repo and run `npm run start` to compile /src -> /lib and run `npm run test` to run the unit tests. 
 
 ## Thanks
 Most of the functionality is a direct port of React's [PropTypes](https://github.com/facebook/react/blob/master/src/isomorphic/classic/types/ReactPropTypes.js).
