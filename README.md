@@ -9,6 +9,7 @@ Still in active development... I will update when it is published to npm.
 ## Usage
 Define `this.optTypes = {}` in your riotjs tag, then include riot-opt-types-mixin as a mixin like so:
 
+#### Simple Example
 ``` javascript
 import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
         
@@ -31,6 +32,7 @@ In this case the console would print this error:
 
 `Invalid opt 'name' of type 'number' supplied to 'my-tag', expected 'string'.`
 
+#### Advanced Example
 You can also nest opt validation which can be useful when combined state management tools such as [Redux](http://redux.js.org)
 
 ``` javascript
@@ -39,7 +41,8 @@ this.optTypes = {
         myReducer: optTypes.shape({
             name: optTypes.string.isRequired
         })
-    })  
+    }),
+    dispatch: optTypes.func.isRequired
 };
 ```
 Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) for more info on how to use these optTypes.
