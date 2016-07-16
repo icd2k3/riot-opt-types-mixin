@@ -63,10 +63,6 @@ export default {
             );
         }
 
-        if (this.defaultOptTypes) {
-            this.opts = Object.assign({}, this.opts, this.defaultOptTypes);
-        }
-
         validateOpts();
         this.on('updated', validateOpts);
         this.on('unmount', () => {
