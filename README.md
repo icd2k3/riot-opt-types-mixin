@@ -69,7 +69,7 @@ This mixin feature all the same `optTypes` listed in React's documentation <stro
 ## Why?
 I'm a big fan of this functionality in [React](https://facebook.github.io/react/) and wanted to be able to utilize it in [Riot](http://riotjs.com) apps.
 
-This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to be very strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
+This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
 
 ## Size
 Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is only benefitial for local development, so you can (and probably should) trim it out for deployment builds. (TODO: add documentation about how to do this...)
