@@ -1,5 +1,5 @@
 # riot-opt-types-mixin
-> A slightly trimmed-down port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
+> A direct port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
 
 This mixin will monitor the opts being passed to your tags. If your tag is passed opts it doesn't expect, this mixin will warn you via a console error.
 
@@ -22,38 +22,8 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
 </my-tag>
 ```
 
-## All optTypes Example
-
-``` javascript
-import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
-        
-<my-tag>
-    this.optTypes = {
-        anyOpt   : optTypes.any,
-        arrayOpt : optTypes.array,
-        arrayOf  : optTypes.arrayOf,
-        bool     : optTypes.bool,
-        func     : optTypes.func,
-        number   : optTypes.number,
-        object   : optTypes.object,
-        oneOf    : optTypes.oneOf,
-        shape    : optTypes.shape,
-        string   : optTypes.string
-    };
-    this.mixin(riotOptTypesMixin);
-    
-    <h1>Example Tag</h1>
-</my-tag>
-```
-
-#### todo: arrayOf
-#### todo: bool
-#### todo: func
-#### todo: number
-#### todo: object
-#### todo: oneOf
-#### todo: shape
-#### todo: string
+## Documentation
+Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html). This mixin feature all the same PropTypes <strong>except</strong> for "element" which validates React components. I plan on appending a "tag" checker soon for Riot.
 
 ## Why?
 I really loved this functionality in [React](https://facebook.github.io/react/) and wanted to be able to utilize it in [Riot](http://riotjs.com) apps.
