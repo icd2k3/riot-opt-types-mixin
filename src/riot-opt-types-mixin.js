@@ -26,6 +26,17 @@ const isTestEnv = window.__env && window.__env.NODE_ENV === 'test';
 let prevOpts,
     errors;
 
+function err(error) {
+    if (!isTestEnv) {
+        console.error(error);
+    }
+    if (errors && errors.length) {
+        errors.push(error.toString());
+    } else {
+        errors = [error.toString()];
+    }
+}
+
 // riotjs mixin
 export default {
     init: function init() {
@@ -39,34 +50,43 @@ export default {
 
                 prevOpts = Object.assign({}, this.opts);
 
+                // check if the tag has any opts that are NOT defined in optTypes
+                for (const key in this.opts) {
+                    if (!this.optTypes.hasOwnProperty(key)
+                        && key !== 'dataIs'
+                        && key !== 'optTypes'
+                        && key !== 'riotTag') {
+                        err(new Error(
+                            `opt '${key}' was not defined in <${tagName}>'s optTypes config.`
+                        ));
+                    }
+                }
+
+                // validate all passed opts
                 for (const key in this.optTypes) {
-                    const error = this.optTypes[key](this.opts, key, tagName, 'prop');
+                    if (this.optTypes.hasOwnProperty(key)) {
+                        const error = this.optTypes[key](this.opts, key, tagName, 'prop');
 
-                    if (error) {
-                        if (!isTestEnv) {
-                            console.error(error);
-                        }
-
-                        if (errors && errors.length) {
-                            errors.push(error.toString());
-                        } else {
-                            errors = [error.toString()];
+                        if (error) {
+                            err(error);
                         }
                     }
                 }
             };
 
+        // if mixin was instantiated, but optTypes was not provided, we need to display console error
         if (!this.optTypes) {
-            console.error(
-                new Error(
-                    `optTypes object was not set in the tag <${tagName}> `
-                    + 'and is expected when using the mixin riot-opt-types-mixin.'
-                )
-            );
+            err(new Error(
+                `optTypes object was not set in the tag <${tagName}> `
+                + 'and is expected when using the mixin riot-opt-types-mixin.'
+            ));
         }
 
-        validateOpts();
-        this.on('updated', validateOpts);
+        // validate all opts of the tag on mount and updated
+        if (this.optTypes) {
+            validateOpts();
+            this.on('updated', validateOpts);
+        }
         this.on('unmount', () => {
             errors = null;
             prevOpts = null;
