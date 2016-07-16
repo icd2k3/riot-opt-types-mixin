@@ -1,5 +1,5 @@
 # riot-opt-types-mixin
-> A slightly trimmed-down [Riot](http://riotjs.com) mixin port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) functionality.
+> A slightly trimmed-down port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
 
 This mixin will monitor the opts being passed to your tags. If your tag is passed opts it doesn't expect, this mixin will warn you via a console error.
 
@@ -56,7 +56,9 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
 #### todo: string
 
 ## Why?
-I really loved this functionality in [React](https://facebook.github.io/react/) and wanted to be able to do it in [Riot](http://riotjs.com)
+I really loved this functionality in [React](https://facebook.github.io/react/) and wanted to be able to utilize it in [Riot](http://riotjs.com) apps.
+
+This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to be very strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
 
 ## Contributing
 Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
