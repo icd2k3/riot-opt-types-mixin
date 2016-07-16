@@ -21,7 +21,7 @@
     "props",
     "react",
     "opt",
-    "opttypes"
+    "opttypes",
     "mixin",
     "validation"
   ],

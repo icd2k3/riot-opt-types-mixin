@@ -44,10 +44,12 @@ export default {
             validateOpts = () => {
                 errors = null;
 
+                // lightly compare prevOpts to current opts to determine if we need to re-validate. This is pretty fast, but will only work if opts are in the same order
                 if (prevOpts && JSON.stringify(prevOpts) === JSON.stringify(this.opts)) {
                     return;
                 }
 
+                // store prevOpts for the next time this tag is updated
                 prevOpts = Object.assign({}, this.opts);
 
                 // check if the tag has any opts that are NOT defined in optTypes
@@ -87,6 +89,8 @@ export default {
             validateOpts();
             this.on('updated', validateOpts);
         }
+
+        // clear errors and prevOpts when tag unmounts
         this.on('unmount', () => {
             errors = null;
             prevOpts = null;
