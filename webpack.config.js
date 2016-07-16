@@ -36,44 +36,89 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: 'babel-loader'
 			},
+			/*
+			*  The below loader reads ReactPropTypes.js and performs a series of regex
+			*  replacements to format the code for Riot usage. For example, renaming 'prop'
+			*  to 'opt' as well as removing unneeded code like React element type checking.
+			*/
 			{
 				test: /ReactPropTypes\.js$/,
 				loader: stringReplacePlugin.replace({
 					replacements: [
+						/*
+						*	Replace all instances of 'prop' with 'opt' to avoid confusion
+						*	about props vs opts in React vs Riot
+						*/
 						{
 							pattern: /prop/g,
 							replacement: function() {
 								return 'opt';
 							}
 						},
-						{
-							pattern: /ReactPropTypeLocationNames\[location\]/g,
-							replacement: function() {
-								return `'opt'`;
-							}
-						},
-						{
-							pattern: /var ReactPropTypeLocationNames = require\(\'\.\/ReactPropTypeLocationNames\'\);/g,
-							replacement: function() {
-								return '';
-							}
-						},
+						/*
+						*	ReactElement is not needed and is a lot of extra overhead,
+						*	so here we remove the dependency
+						*/
 						{
 							pattern: /var ReactElement = require\(\'\.\/ReactElement\'\);/g,
 							replacement: function() {
-								return '';
+								return `/* var ReactElement = require('./ReactElement');`
+									+ `was removed by riot-opt-types-mixin webpack config */`;
 							}
 						},
+						/*
+						*	ReactPropTypeLocationNames is not needed and is extra overhead,
+						*	so here we remove the dependency.
+						*/
+						{
+							pattern: /var ReactPropTypeLocationNames = require\(\'\.\/ReactPropTypeLocationNames\'\);/g,
+							replacement: function() {
+								return `/* var ReactPropTypeLocationNames = require('./ReactPropTypeLocationNames');`
+									+ `was removed by riot-opt-types-mixin webpack config */`;
+							}
+						},
+						/*
+						*	ReactPropTypeLocationNames was removed above ^ so here we convert all
+						*	location names to just be 'opt' for simplicity.
+						*/
+						{
+							pattern: /ReactPropTypeLocationNames\[location\]/g,
+							replacement: function() {
+								return `'opt' /* ReactPropTypeLocationNames[location]`
+									+ `was replaced by 'opt' in riot-opt-types-mixin webpack config */`;
+							}
+						},
+						/*
+						*	ReactElement dependency was removed above, so we also need to
+						*	remove the 'element' checker option from the optTypes list
+						*/
 						{
 							pattern: /element\: createElementTypeChecker\(\),/g,
 							replacement: function() {
-								return '';
+								return `/* element: createElementTypeChecker`
+									+ `was removed by riot-opt-types-mixin webpack config */`;
 							}
 						},
+						/*
+						*	ReactElement dependency was removed above, so we also need to
+						*	remove the entire createElementTypeChecker function in ReactPropTypes
+						*/
 						{
 							pattern: /function createElementTypeChecker\(\) \{([^}]+)\}([^}]+)\}([^}]+)\}/gm,
 							replacement: function() {
-								return '';
+								return `/* function createElementTypeChecker`
+									+ `was removed by riot-opt-types-mixin webpack config */`;
+							}
+						},
+						/*
+						*	ReactElement dependency was removed above, so we also need to
+						*	remove this conditional in ReactPropTypes as it is not needed
+						*/
+						{
+							pattern: / \|\| ReactElement\.isValidElement\(optValue\)/g,
+							replacement: function() {
+								return `/* || ReactElement.isValidElement(optValue)`
+									+ `was removed by riot-opt-types-mixin webpack config */`;
 							}
 						}
 					]

@@ -3,11 +3,12 @@ import './test.tag';
 
 describe('riot-opt-types-mixin tests', () => {
     const getIsRequiredError = (optName) => {
-        return new Error(
-            `Required opt \`${optName}\` was not specified in `
-            + `\`test-tag\`.`
-        ).toString();
-    };
+            return new Error(
+                `Required opt \`${optName}\` was not specified in `
+                + `\`test-tag\`.`
+            ).toString();
+        },
+        TestInstance = () => {};
 
     let tagDom,
         tag
@@ -26,21 +27,33 @@ describe('riot-opt-types-mixin tests', () => {
     it('Should display no errors if all opts are passed as expected', (done) => {
         tag = riot.mount(tagDom, 'test-tag', {
             optTypes: {
+                anyTest: optTypes.any.isRequired,
+                arrayOfTest: optTypes.arrayOf(optTypes.number).isRequired,
                 arrayTest: optTypes.array.isRequired,
                 boolTest: optTypes.bool.isRequired,
                 funcTest: optTypes.func.isRequired,
+                instanceOfTest: optTypes.instanceOf(TestInstance),
+                nodeTest: optTypes.node.isRequired,
                 numberTest: optTypes.number.isRequired,
+                objectOfTest: optTypes.objectOf(optTypes.number).isRequired,
                 objectTest: optTypes.object.isRequired,
                 oneOfTest: optTypes.oneOf(['mock']).isRequired,
+                oneOfTypeTest: optTypes.oneOfType([optTypes.number, optTypes.string]).isRequired,
                 shapeTest: optTypes.shape({mock: optTypes.string.isRequired}).isRequired,
                 stringTest: optTypes.string.isRequired
             },
+            anyTest: 'mock',
+            arrayOfTest: [1],
             arrayTest: ['mock'],
             boolTest: true,
             funcTest: () => {},
+            instanceOfTest: new TestInstance(),
+            nodeTest: 'mock',
             numberTest: 1,
+            objectOfTest: {mock: 1},
             objectTest: {},
             oneOfTest: 'mock',
+            oneOfTypeTest: 'mock',
             shapeTest: {mock: 'mock'},
             stringTest: 'mock'
         })[0];
