@@ -78,9 +78,7 @@ Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is 
 Using Riot in conjunction with TypeScript allows for setting of expected prop types. [RiotTS](https://github.com/nippur72/RiotTS) looks like a good option if you're interested in using TypeScript for your Riot app.
 
 ## Contributing
-Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
-
-To develop locally, clone this repo and run `npm run start` to compile /src -> /lib and run `npm run ` to run the unit tests. 
+PRs welcome! Please contact me if you have any questions, suggestions, or issues too!
 
 ## Thanks
 Most of the functionality is a direct port of React's [PropTypes](https://github.com/facebook/react/blob/master/src/isomorphic/classic/types/ReactPropTypes.js).
