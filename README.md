@@ -74,7 +74,7 @@ Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is 
 ## Contributing
 Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
 
-To develop locally, clone this repo and run `npm run start` to compile /src -> /lib and run `npm run ` to run the unit s. 
+To develop locally, clone this repo and run `npm run start` to compile /src -> /lib and run `npm run ` to run the unit tests. 
 
 ## Thanks
 Most of the functionality is a direct port of React's [PropTypes](https://github.com/facebook/react/blob/master/src/isomorphic/classic/types/ReactPropTypes.js).
