@@ -17,6 +17,7 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
     this.optTypes = {
         name: optTypes.string.isRequired
     };
+
     this.mixin(riotOptTypesMixin);
     
     <h1>Hello, {opts.name}</h1>
@@ -40,6 +41,8 @@ this.optTypes = {
     }),
     dispatch: optTypes.func.isRequired
 };
+
+this.mixin(riotOptTypesMixin);
 ```
 Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) for more info on how to use these optTypes.
 
