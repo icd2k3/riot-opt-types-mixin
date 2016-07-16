@@ -21,6 +21,15 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
     <h1>Hello, {opts.name}</h1>
 </my-tag>
 ```
+Now, if you pass `name` incorrectly to `<my-tag>` you get a nice descriptive error in your browser's console
+
+```javascript
+<my-tag name={100}/>
+```
+
+In this case the console would print this error:
+
+`Invalid opt 'name' of type 'number' supplied to 'my-tag', expected 'string'.`
 
 ## Full Example
 TODO
