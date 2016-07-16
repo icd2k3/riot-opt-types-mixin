@@ -1,3 +1,5 @@
+import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
+
 /**
 * This is a slightly trimmed down port of React's PropTypes bundled as a riotjs mixin.
 *
@@ -38,7 +40,7 @@ export default {
                 prevOpts = Object.assign({}, this.opts);
 
                 for (const key in this.optTypes) {
-                    const error = this.optTypes[key](this.opts, key, tagName);
+                    const error = this.optTypes[key](this.opts, key, tagName, 'prop');
 
                     if (error) {
                         if (!isTestEnv) {
@@ -85,7 +87,7 @@ export default {
 };
 
 // getOptType ported from React PropTypes source
-function getOptType(optValue) {
+/*function getOptType(optValue) {
     const optType = typeof optValue;
 
     if (Array.isArray(optValue)) {
@@ -272,10 +274,10 @@ function createArrayOfTypeChecker(typeChecker) {
         return null;
     }
     return createChainableTypeChecker(validate);
-}
+}*/
 
 // all supported optTypes - imported as a sub-module ex: import { optTypes } from 'riot-opt-types-mixin'
-module.exports.optTypes = {
+/*module.exports.optTypes = {
     any: createAnyTypeChecker(),
     array: createPrimitiveTypeChecker('array'),
     arrayOf: createArrayOfTypeChecker,
@@ -286,4 +288,6 @@ module.exports.optTypes = {
     oneOf: createOneOfTypeChecker,
     shape: createShapeTypeChecker,
     string: createPrimitiveTypeChecker('string')
-};
+};*/
+
+module.exports.optTypes = ReactPropTypes;

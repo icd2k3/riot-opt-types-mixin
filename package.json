@@ -57,6 +57,7 @@
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-riot": "^1.1.0",
     "mocha": "^2.5.3",
+    "react": "^15.2.1",
     "riot": "^2.5.0",
     "riotjs-loader": "^3.0.0",
     "webpack": "^1.13.1",

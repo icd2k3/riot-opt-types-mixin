@@ -50,6 +50,12 @@ module.exports = {
 		new clean([
 			LIB
 		])
+		/*,
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false
+			}
+		})*/
 	],
 	resolve: {
 		extensions: ['', '.js']

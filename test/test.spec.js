@@ -4,7 +4,7 @@ import './test.tag';
 describe('riot-opt-types-mixin tests', () => {
     const getIsRequiredError = (optName) => {
         return new Error(
-            `Required opt \`${optName}\` was not specified in `
+            `Required prop \`${optName}\` was not specified in `
             + `\`test-tag\`.`
         ).toString();
     };
