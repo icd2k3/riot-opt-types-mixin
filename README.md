@@ -1,5 +1,5 @@
 # riot-opt-types-mixin
-> A slightly trimmed-down [Riot](http://riotjs.com) mixin port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) functionality.
+> A slightly trimmed-down port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
 
 This mixin will monitor the opts being passed to your tags. If your tag is passed opts it doesn't expect, this mixin will warn you via a console error.
 
