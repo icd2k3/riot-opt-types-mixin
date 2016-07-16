@@ -4,6 +4,7 @@
 var webpack = require('webpack');
 var path    = require('path');
 var clean   = require('clean-webpack-plugin');
+var stringReplacePlugin = require('string-replace-webpack-plugin');
 
 
 // static paths
@@ -34,6 +35,31 @@ module.exports = {
 				test: /\.js$|\.tag$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader'
+			},
+			{
+				test: /ReactPropTypes\.js$/,
+				loader: stringReplacePlugin.replace({
+					replacements: [
+						{
+							pattern: /prop/g,
+							replacement: function() {
+								return 'opt';
+							}
+						},
+						{
+							pattern: /ReactPropTypeLocationNames\[location\]/g,
+							replacement: function() {
+								return `'opt'`;
+							}
+						},
+						{
+							pattern: /var ReactPropTypeLocationNames = require\(\'\.\/ReactPropTypeLocationNames\'\);/g,
+							replacement: function() {
+								return '';
+							}
+						}
+					]
+				})
 			}
 		]
 	},
@@ -49,13 +75,8 @@ module.exports = {
 		}),
 		new clean([
 			LIB
-		])
-		/*,
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			}
-		})*/
+		]),
+		new stringReplacePlugin()
 	],
 	resolve: {
 		extensions: ['', '.js']

@@ -60,6 +60,7 @@
     "react": "^15.2.1",
     "riot": "^2.5.0",
     "riotjs-loader": "^3.0.0",
+    "string-replace-webpack-plugin": "0.0.3",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }
