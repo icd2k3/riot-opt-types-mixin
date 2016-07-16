@@ -57,6 +57,24 @@ module.exports = {
 							replacement: function() {
 								return '';
 							}
+						},
+						{
+							pattern: /var ReactElement = require\(\'\.\/ReactElement\'\);/g,
+							replacement: function() {
+								return '';
+							}
+						},
+						{
+							pattern: /element\: createElementTypeChecker\(\),/g,
+							replacement: function() {
+								return '';
+							}
+						},
+						{
+							pattern: /function createElementTypeChecker\(\) \{([^}]+)\}([^}]+)\}([^}]+)\}/gm,
+							replacement: function() {
+								return '';
+							}
 						}
 					]
 				})
