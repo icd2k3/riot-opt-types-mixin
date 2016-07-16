@@ -40,6 +40,8 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
 ## Why?
 I really loved this functionality in [React](https://facebook.github.io/react/) and wanted to be able to utilize it in [Riot](http://riotjs.com) apps.
 
+This mixin isn't really benefitial to small applications, but it can help while developing larger applications.
+
 ## Contributing
 Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
 
