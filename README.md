@@ -22,11 +22,29 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
 </my-tag>
 ```
 
-## Supported optTypes
-| Type                | Definition          | Example          |
-| ------------------- |:------------------- |:---------------- |
-| any                 | Will pass if any opt type is passed | `<my-tag opt={true}/> = OK`, `<my-tag/> = ERROR` |
-| array               | Opt must be an array  |  `<my-tag opt={[]}/> = OK`, `<my-tag opt={'not array'}/> = ERROR` |
+## All optTypes Example
+
+``` javascript
+import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
+        
+<my-tag>
+    this.optTypes = {
+        anyOpt   : optTypes.any,
+        arrayOpt : optTypes.array,
+        arrayOf  : optTypes.arrayOf,
+        bool     : optTypes.bool,
+        func     : optTypes.func,
+        number   : optTypes.number,
+        object   : optTypes.object,
+        oneOf    : optTypes.oneOf,
+        shape    : optTypes.shape,
+        string   : optTypes.string
+    };
+    this.mixin(riotOptTypesMixin);
+    
+    <h1>Example Tag</h1>
+</my-tag>
+```
 
 #### todo: arrayOf
 #### todo: bool
