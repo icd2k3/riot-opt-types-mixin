@@ -31,6 +31,19 @@ In this case the console would print this error:
 
 `Invalid opt 'name' of type 'number' supplied to 'my-tag', expected 'string'.`
 
+You can also nest opt validation which can be useful when combined state management tools such as [Redux](http://redux.js.org)
+
+``` javascript
+this.optTypes = {
+    state: optTypes.shape({
+        myReducer: optTypes.shape({
+            name: optTypes.string.isRequired
+        })
+    })  
+};
+```
+Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) for more info on how to use these optTypes.
+
 ## Supported `optTypes`
 - optTypes.any
 - optTypes.arrayOf
@@ -47,7 +60,7 @@ In this case the console would print this error:
 - optTypes.shape
 - optTypes.string
 
-Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) if you have any questions about how these function.
+Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) if you have any questions about how each of these function.
 
 This mixin feature all the same `optTypes` listed in React's documentation <strong>except</strong> for `element` which validates React components. I plan on appending a "tag" checker soon for Riot.
 
