@@ -24,9 +24,9 @@ import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
 
 ## Supported optTypes
 | Type                | Definition          | Example          |
-| ------------------- |:------------------- | ----------------:|
-| any                 | Will pass if any opt type is passed | `opt: true = OK`, `opt: null = ERROR` |
-| array               | Opt must be an array  | 
+| ------------------- |:------------------- |:---------------- |
+| any                 | Will pass if any opt type is passed | `<my-tag opt={true}/> = OK`, `<my-tag/> = ERROR` |
+| array               | Opt must be an array  |  `<my-tag opt={[]}/> = OK`, `<my-tag opt={'not array'}/> = ERROR` |
 
 #### todo: arrayOf
 #### todo: bool
