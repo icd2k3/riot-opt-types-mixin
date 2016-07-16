@@ -34,7 +34,7 @@ I really loved this functionality in [React](https://facebook.github.io/react/) 
 This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to be very strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
 
 ## Size
-Compressed this mixin clocks in at about 6kb <strong>BUT<strong>, really it is only benefitial for local development, so you could trim it out for deployment builds.
+Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is only benefitial for local development, so you could trim it out for deployment builds.
 
 ## Contributing
 Please contact me at icd2k3@gmail.com if you have any questions, suggestions, or issues.
