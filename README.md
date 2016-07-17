@@ -53,7 +53,6 @@ Please refer to React's PropTypes [Documentation](https://facebook.github.io/rea
 - optTypes.bool
 - optTypes.func
 - optTypes.instanceOf
-- optTypes.node
 - optTypes.number
 - optTypes.objectOf
 - optTypes.object
@@ -64,7 +63,7 @@ Please refer to React's PropTypes [Documentation](https://facebook.github.io/rea
 
 Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) if you have any questions about how each of these function.
 
-This mixin feature all the same `optTypes` listed in React's documentation <strong>except</strong> for `element` which validates React components. I plan on appending a "tag" checker soon for Riot.
+This mixin feature all the same `optTypes` listed in React's documentation <strong>except</strong> for `element` and `node` which validates React components. I plan on appending a "tag" checker soon for Riot.
 
 ## Why?
 I'm a big fan of this functionality in [React](https://facebook.github.io/react/) and wanted to be able to utilize it in [Riot](http://riotjs.com) apps.
@@ -72,7 +71,10 @@ I'm a big fan of this functionality in [React](https://facebook.github.io/react/
 This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
 
 ## Size
-Compressed this mixin clocks in at about 6kb <strong>BUT</strong>, really it is only benefitial for local development, so you can (and probably should) trim it out for deployment builds. (TODO: add documentation about how to do this...)
+Compressed this mixin clocks in at about 5kb <strong>BUT</strong>, really it is only benefitial for local development, so you can (and probably should) trim it out for deployment builds.
+
+If using webpack, [strip-loader](https://github.com/yahoo/strip-loader) and [NormalModuleReplacementPlugin](https://webpack.github.io/docs/list-of-plugins.html#normalmodulereplacementplugin) are good places to start.
+(TODO: add more documentation about how to do this...)
 
 ## Alternatives
 Using Riot in conjunction with TypeScript allows for setting of expected prop types. [RiotTS](https://github.com/nippur72/RiotTS) looks like a good option if you're interested in using TypeScript for your Riot app.

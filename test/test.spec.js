@@ -52,7 +52,11 @@ describe('riot-opt-types-mixin tests', () => {
                 }
             }
         },
-        validateErrors = () => {
+        validateErrors = (logErrors) => {
+            if (logErrors) {
+                logAllErrors(expectedErrors);
+            }
+
             expect(tag.riotOptTypesMixinErrors.length, 'actual errors length should equal expected errors length')
                 .to.equal(expectedErrors.length);
 
@@ -115,7 +119,6 @@ describe('riot-opt-types-mixin tests', () => {
                 boolTest: optTypes.bool.isRequired,
                 funcTest: optTypes.func.isRequired,
                 instanceOfTest: optTypes.instanceOf(TestInstance).isRequired,
-                nodeTest: optTypes.node.isRequired,
                 numberTest: optTypes.number.isRequired,
                 objectOfTest: optTypes.objectOf(optTypes.number).isRequired,
                 objectTest: optTypes.object.isRequired,
@@ -130,7 +133,6 @@ describe('riot-opt-types-mixin tests', () => {
             boolTest: true,
             funcTest: () => {},
             instanceOfTest: new TestInstance(),
-            nodeTest: 'mock',
             numberTest: 1,
             objectOfTest: {mock: 1},
             objectTest: {},
@@ -154,7 +156,6 @@ describe('riot-opt-types-mixin tests', () => {
             mockIsRequiredError('boolTest'),
             mockIsRequiredError('funcTest'),
             mockIsRequiredError('instanceOfTest'),
-            mockIsRequiredError('nodeTest'),
             mockIsRequiredError('numberTest'),
             mockIsRequiredError('objectOfTest'),
             mockIsRequiredError('objectTest'),
@@ -172,7 +173,6 @@ describe('riot-opt-types-mixin tests', () => {
                 boolTest: optTypes.bool.isRequired,
                 funcTest: optTypes.func.isRequired,
                 instanceOfTest: optTypes.instanceOf(TestInstance).isRequired,
-                nodeTest: optTypes.node.isRequired,
                 numberTest: optTypes.number.isRequired,
                 objectOfTest: optTypes.objectOf(optTypes.number).isRequired,
                 objectTest: optTypes.object.isRequired,
