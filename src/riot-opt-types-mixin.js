@@ -27,6 +27,7 @@ let prevOpts,
     errors;
 
 function err(error) {
+
     /* istanbul ignore next */
     if (!isTestEnv) {
         console.error(error);
@@ -98,6 +99,7 @@ export default {
         });
     },
     getRiotOptTypesMixinErrors: () => {
+
         /* istanbul ignore next */
         if (!isTestEnv) {
             console.warn('The getRiotOptTypesMixinErrors function is only intended to be used for testing purposes');
