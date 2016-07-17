@@ -63,7 +63,7 @@ module.exports = {
 							pattern: /var ReactElement = require\(\'\.\/ReactElement\'\);/g,
 							replacement: function() {
 								return `/* var ReactElement = require('./ReactElement');`
-									+ `was removed by riot-opt-types-mixin webpack config */`;
+									+ ` was removed by riot-opt-types-mixin webpack config */`;
 							}
 						},
 						/*
@@ -74,7 +74,7 @@ module.exports = {
 							pattern: /var ReactPropTypeLocationNames = require\(\'\.\/ReactPropTypeLocationNames\'\);/g,
 							replacement: function() {
 								return `/* var ReactPropTypeLocationNames = require('./ReactPropTypeLocationNames');`
-									+ `was removed by riot-opt-types-mixin webpack config */`;
+									+ ` was removed by riot-opt-types-mixin webpack config */`;
 							}
 						},
 						/*
@@ -85,7 +85,7 @@ module.exports = {
 							pattern: /ReactPropTypeLocationNames\[location\]/g,
 							replacement: function() {
 								return `'opt' /* ReactPropTypeLocationNames[location]`
-									+ `was replaced by 'opt' in riot-opt-types-mixin webpack config */`;
+									+ ` was replaced by 'opt' in riot-opt-types-mixin webpack config */`;
 							}
 						},
 						/*
@@ -96,7 +96,7 @@ module.exports = {
 							pattern: /element\: createElementTypeChecker\(\),/g,
 							replacement: function() {
 								return `/* element: createElementTypeChecker`
-									+ `was removed by riot-opt-types-mixin webpack config */`;
+									+ ` was removed by riot-opt-types-mixin webpack config */`;
 							}
 						},
 						/*
@@ -107,7 +107,7 @@ module.exports = {
 							pattern: /function createElementTypeChecker\(\) \{([^}]+)\}([^}]+)\}([^}]+)\}/gm,
 							replacement: function() {
 								return `/* function createElementTypeChecker`
-									+ `was removed by riot-opt-types-mixin webpack config */`;
+									+ ` was removed by riot-opt-types-mixin webpack config */`;
 							}
 						},
 						/*
@@ -118,7 +118,16 @@ module.exports = {
 							pattern: / \|\| ReactElement\.isValidElement\(optValue\)/g,
 							replacement: function() {
 								return `/* || ReactElement.isValidElement(optValue)`
-									+ `was removed by riot-opt-types-mixin webpack config */`;
+									+ ` was removed by riot-opt-types-mixin webpack config */`;
+							}
+						},
+						/*
+						*	Replace invalid PropType error messaging with invalid optType
+						*/
+						{
+							pattern: /invalid PropType/g,
+							replacement: function() {
+								return `invalid optType`;
 							}
 						}
 					]

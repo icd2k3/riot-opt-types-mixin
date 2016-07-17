@@ -38,6 +38,11 @@ describe('riot-opt-types-mixin tests', () => {
                 `Invalid opt \`${optName}\` supplied to \`test-tag\`.`
             ).toString();
         },
+        mockInvalidOptTypeNotationError = (optName, type) => {
+            return new Error(
+                `Property \`${optName}\` of component \`test-tag\` has invalid optType notation inside ${type}.`
+            ).toString();
+        },
         logAllErrors = (expectedErrors) => {
             for (let i=0; i<tag.riotOptTypesMixinErrors.length; i++) {
                 if (expectedErrors) {
@@ -46,14 +51,27 @@ describe('riot-opt-types-mixin tests', () => {
                     console.log(tag.riotOptTypesMixinErrors[i]);
                 }
             }
+        },
+        validateErrors = () => {
+            expect(tag.riotOptTypesMixinErrors.length, 'actual errors length should equal expected errors length')
+                .to.equal(expectedErrors.length);
+
+            for (let i=0; i<tag.riotOptTypesMixinErrors.length; i++) {
+                const err = tag.riotOptTypesMixinErrors[i],
+                    expectedErr = expectedErrors[i];
+
+                expect(err).to.deep.equal(expectedErr);
+            }
         };
 
     class TestInstance {};
 
     let tagDom,
-        tag
+        tag,
+        expectedErrors;
 
     beforeEach(() => {
+        expectedErrors = null;
         tagDom = document.createElement('div');
         document.body.appendChild(tagDom);
     });
@@ -129,7 +147,7 @@ describe('riot-opt-types-mixin tests', () => {
     });
 
     it('Should display errors if opts are required, but not provided to the tag from parent', (done) => {
-        const expectedErrors = [
+        expectedErrors = [
             mockIsRequiredError('anyTest'),
             mockIsRequiredError('arrayOfTest'),
             mockIsRequiredError('arrayTest'),
@@ -165,21 +183,13 @@ describe('riot-opt-types-mixin tests', () => {
             }
         })[0];
 
-        expect(tag.riotOptTypesMixinErrors.length, 'actual errors length should equal expected errors length')
-            .to.equal(expectedErrors.length);
-
-        for (let i=0; i<tag.riotOptTypesMixinErrors.length; i++) {
-            const err = tag.riotOptTypesMixinErrors[i],
-                expectedErr = expectedErrors[i];
-
-            expect(err).to.deep.equal(expectedErr);
-        }
+        validateErrors();
 
         done();
     });
 
     it('Should display errors if opts are optional, but passed incorrectly', (done) => {
-        const expectedErrors = [
+        expectedErrors = [
             mockInvalidArrayOfError('arrayOfTest', 'string'),
             mockInvalidTypeError('arrayTest', 'boolean', 'array'),
             mockInvalidTypeError('boolTest', 'string', 'boolean'),
@@ -223,15 +233,51 @@ describe('riot-opt-types-mixin tests', () => {
             stringTest: []
         })[0];
 
-        expect(tag.riotOptTypesMixinErrors.length, 'actual errors length should equal expected errors length')
-            .to.equal(expectedErrors.length);
+        validateErrors();
 
-        for (let i=0; i<tag.riotOptTypesMixinErrors.length; i++) {
-            const err = tag.riotOptTypesMixinErrors[i],
-                expectedErr = expectedErrors[i];
+        done();
+    });
 
-            expect(err).to.deep.equal(expectedErr);
-        }
+    it('Should display errors for invalid nested optTypes', (done) => {
+        expectedErrors = [
+            mockInvalidTypeError('shapeTest.shapeNestedTest', 'boolean', 'string')
+        ];
+
+        tag = riot.mount(tagDom, 'test-tag', {
+            optTypes: {
+                shapeTest: optTypes.shape({
+                    shapeNestedTest: optTypes.string.isRequired
+                }).isRequired
+            },
+            shapeTest: {
+                shapeNestedTest: false
+            }
+        })[0];
+
+        validateErrors();
+
+        done();
+    });
+
+    it('Should return invalid optType errors if passed incorrectly', (done) => {
+        expectedErrors = [
+            mockInvalidOptTypeNotationError('arrayOfTest', 'arrayOf'),
+            mockInvalidOptTypeNotationError('objectOfTest', 'objectOf'),
+            new Error('Invalid argument supplied to oneOfType, expected an instance of array.').toString()
+        ];
+
+        tag = riot.mount(tagDom, 'test-tag', {
+            optTypes: {
+                arrayOfTest: optTypes.arrayOf({invalid: 'notation'}),
+                objectOfTest: optTypes.objectOf({invalid: 'notation'}),
+                oneOfTypeTest: optTypes.oneOfType({invalid: 'notation'})
+            },
+            arrayOfTest: ['mock'],
+            objectOfTest: {mock: 'mock'},
+            oneOfTypeTest: 'mock'
+        })[0];
+
+        validateErrors();
 
         done();
     });

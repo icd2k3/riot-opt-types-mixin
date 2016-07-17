@@ -27,6 +27,7 @@ let prevOpts,
     errors;
 
 function err(error) {
+    /* istanbul ignore next */
     if (!isTestEnv) {
         console.error(error);
     }
@@ -67,7 +68,7 @@ export default {
                 // validate all passed opts
                 for (const key in this.optTypes) {
                     if (this.optTypes.hasOwnProperty(key)) {
-                        const error = this.optTypes[key](this.opts, key, tagName, 'prop');
+                        const error = this.optTypes[key](this.opts, key, tagName);
 
                         if (error) {
                             err(error);
@@ -97,16 +98,11 @@ export default {
         });
     },
     getRiotOptTypesMixinErrors: () => {
+        /* istanbul ignore next */
         if (!isTestEnv) {
             console.warn('The getRiotOptTypesMixinErrors function is only intended to be used for testing purposes');
         }
         return errors;
-    },
-    getRiotOptTypesPrevOpts: () => {
-        if (!isTestEnv) {
-            console.warn('The getRiotOptTypesPrevOpts function is only intended to be used for testing purposes');
-        }
-        return prevOpts;
     }
 };
 
