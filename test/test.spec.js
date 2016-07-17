@@ -263,6 +263,7 @@ describe('riot-opt-types-mixin tests', () => {
         expectedErrors = [
             mockInvalidOptTypeNotationError('arrayOfTest', 'arrayOf'),
             mockInvalidOptTypeNotationError('objectOfTest', 'objectOf'),
+            new Error('Invalid argument supplied to oneOf, expected an instance of array.').toString(),
             new Error('Invalid argument supplied to oneOfType, expected an instance of array.').toString()
         ];
 
@@ -270,10 +271,12 @@ describe('riot-opt-types-mixin tests', () => {
             optTypes: {
                 arrayOfTest: optTypes.arrayOf({invalid: 'notation'}),
                 objectOfTest: optTypes.objectOf({invalid: 'notation'}),
+                oneOfTest: optTypes.oneOf({invalid: 'notation'}),
                 oneOfTypeTest: optTypes.oneOfType({invalid: 'notation'})
             },
             arrayOfTest: ['mock'],
             objectOfTest: {mock: 'mock'},
+            oneOfTest: 'mock',
             oneOfTypeTest: 'mock'
         })[0];
 
