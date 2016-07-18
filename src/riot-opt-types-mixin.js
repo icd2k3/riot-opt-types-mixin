@@ -32,9 +32,9 @@ let errors;
 
 function appendError(err) {
     if (errors && errors.length) {
-        errors.push(err.toString());
+        errors.push(err);
     } else {
-        errors = [err.toString()];
+        errors = [err];
     }
 }
 

@@ -65,8 +65,8 @@ describe('riot-opt-types-mixin tests', () => {
                 .to.equal(expectedErrors.length);
 
             for (let i=0; i<riotOptTypesMixinErrors.length; i++) {
-                const err = riotOptTypesMixinErrors[i],
-                    expectedErr = expectedErrors[i];
+                const err = riotOptTypesMixinErrors[i].toString(),
+                    expectedErr = expectedErrors[i].toString();
 
                 expect(err).to.deep.equal(expectedErr);
             }
@@ -93,7 +93,7 @@ describe('riot-opt-types-mixin tests', () => {
     it('Should display error if mixin is instantiated, but optTypes is missing', (done) => {
         tag = riot.mount(tagDom, 'test-tag', {})[0];
 
-        expect(tag.getRiotOptTypesMixinErrors()[0], 'expect error if tag is passed an opt that is not in optTypes')
+        expect(tag.getRiotOptTypesMixinErrors()[0].toString(), 'expect error if tag is passed an opt that is not in optTypes')
             .to.equal(new Error(
                 `The \`optTypes\` object was not set in the tag \`test-tag\` `
                 + 'and is expected when using the mixin riot-opt-types-mixin.'
@@ -108,7 +108,7 @@ describe('riot-opt-types-mixin tests', () => {
             testMissing: 'testMissing'
         })[0];
 
-        expect(tag.getRiotOptTypesMixinErrors()[0], 'expect error if tag is passed an opt that is not in optTypes')
+        expect(tag.getRiotOptTypesMixinErrors()[0].toString(), 'expect error if tag is passed an opt that is not in optTypes')
             .to.equal(new Error(`Opt \`testMissing\` was passed to tag \`test-tag\`, but was not defined in \`optTypes\` object.`).toString());
 
         done();

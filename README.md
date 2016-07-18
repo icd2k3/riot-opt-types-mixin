@@ -4,7 +4,7 @@
 This mixin will monitor the opts being passed to your tags. If your tag is passed opts it doesn't expect, this mixin will warn you via a console error.
 
 ## Installation
-Still in active development... I will update when it is published to npm.
+`npm install riot-opt-types-mixin --save-dev`
 
 ## Usage
 Define `this.optTypes = {}` in your riotjs tag, then include riot-opt-types-mixin as a mixin like so:
@@ -35,7 +35,7 @@ You can also nest opt validation which can be useful when combined state managem
 ``` javascript
 this.optTypes = {
     state: optTypes.shape({
-        myReducer: optTypes.shape({
+        data: optTypes.shape({
             name: optTypes.string.isRequired
         })
     }),
