@@ -81,7 +81,7 @@ export default {
     init: function init() {
         // validate tag opts on update (if optTypes was provided in tag)
         this.on('update', () => {
-            if (this.optTypes && this.opts.riotTag) {
+            if (this.optTypes && (this.opts.riotTag || this.opts.dataIs)) {
                 validateOpts(this.optTypes, this.opts, this.opts.dataIs);
             }
         });

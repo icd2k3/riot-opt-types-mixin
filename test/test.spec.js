@@ -295,11 +295,9 @@ describe('riot-opt-types-mixin tests', () => {
             mockInvalidTypeError('stringTest', 'boolean', 'string')
         ];
 
-        tag.opts = {
-            riotTag: 'test-tag',
-            dataIs: 'test-tag',
+        tag.opts = Object.assign({}, tag.opts, {
             stringTest: false
-        };
+        });
         tag.update();
 
         validateErrors();
