@@ -44,24 +44,28 @@ describe('riot-opt-types-mixin tests', () => {
             ).toString();
         },
         logAllErrors = (expectedErrors) => {
-            for (let i=0; i<tag.riotOptTypesMixinErrors.length; i++) {
+            const riotOptTypesMixinErrors = tag.getRiotOptTypesMixinErrors();
+
+            for (let i=0; i<riotOptTypesMixinErrors.length; i++) {
                 if (expectedErrors) {
-                    console.log(`\nExpected: ${expectedErrors[i]}\nReceived: ${tag.riotOptTypesMixinErrors[i]}\n`);
+                    console.log(`\nExpected: ${expectedErrors[i]}\nReceived: ${riotOptTypesMixinErrors[i]}\n`);
                 } else {
-                    console.log(tag.riotOptTypesMixinErrors[i]);
+                    console.log(riotOptTypesMixinErrors[i]);
                 }
             }
         },
         validateErrors = (logErrors) => {
+            const riotOptTypesMixinErrors = tag.getRiotOptTypesMixinErrors();
+
             if (logErrors) {
                 logAllErrors(expectedErrors);
             }
 
-            expect(tag.riotOptTypesMixinErrors.length, 'actual errors length should equal expected errors length')
+            expect(riotOptTypesMixinErrors.length, 'actual errors length should equal expected errors length')
                 .to.equal(expectedErrors.length);
 
-            for (let i=0; i<tag.riotOptTypesMixinErrors.length; i++) {
-                const err = tag.riotOptTypesMixinErrors[i],
+            for (let i=0; i<riotOptTypesMixinErrors.length; i++) {
+                const err = riotOptTypesMixinErrors[i],
                     expectedErr = expectedErrors[i];
 
                 expect(err).to.deep.equal(expectedErr);
@@ -89,9 +93,9 @@ describe('riot-opt-types-mixin tests', () => {
     it('Should display error if mixin is instantiated, but optTypes is missing', (done) => {
         tag = riot.mount(tagDom, 'test-tag', {})[0];
 
-        expect(tag.riotOptTypesMixinErrors[0], 'expect error if tag is passed an opt that is not in optTypes')
+        expect(tag.getRiotOptTypesMixinErrors()[0], 'expect error if tag is passed an opt that is not in optTypes')
             .to.equal(new Error(
-                `optTypes object was not set in the tag <test-tag> `
+                `The \`optTypes\` object was not set in the tag \`test-tag\` `
                 + 'and is expected when using the mixin riot-opt-types-mixin.'
             ).toString());
 
@@ -104,8 +108,8 @@ describe('riot-opt-types-mixin tests', () => {
             testMissing: 'testMissing'
         })[0];
 
-        expect(tag.riotOptTypesMixinErrors[0], 'expect error if tag is passed an opt that is not in optTypes')
-            .to.equal(new Error(`opt 'testMissing' was not defined in <test-tag>'s optTypes config.`).toString());
+        expect(tag.getRiotOptTypesMixinErrors()[0], 'expect error if tag is passed an opt that is not in optTypes')
+            .to.equal(new Error(`Opt \`testMissing\` was passed to tag \`test-tag\`, but was not defined in \`optTypes\` object.`).toString());
 
         done();
     });
@@ -142,7 +146,7 @@ describe('riot-opt-types-mixin tests', () => {
             stringTest: 'mock'
         })[0];
 
-        expect(tag.riotOptTypesMixinErrors, 'no errors expected')
+        expect(tag.getRiotOptTypesMixinErrors(), 'no errors expected')
             .to.equal(null);
 
         done();
@@ -279,6 +283,35 @@ describe('riot-opt-types-mixin tests', () => {
             oneOfTest: 'mock',
             oneOfTypeTest: 'mock'
         })[0];
+
+        validateErrors();
+
+        done();
+    });
+
+    it('Should re-validate if updated and opts have changed', (done) => {
+        expectedErrors = [
+            mockInvalidTypeError('stringTest', 'array', 'string')
+        ];
+
+        tag = riot.mount(tagDom, 'test-tag', {
+            optTypes: {
+                stringTest: optTypes.string.isRequired
+            },
+            stringTest: []
+        })[0];
+
+        validateErrors();
+
+        expectedErrors = [
+            mockInvalidTypeError('stringTest', 'boolean', 'string')
+        ];
+
+        tag.opts = {
+            dataIs: 'test-tag',
+            stringTest: false
+        };
+        tag.update();
 
         validateErrors();
 

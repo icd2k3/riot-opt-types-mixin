@@ -71,7 +71,7 @@ I'm a big fan of this functionality in [React](https://facebook.github.io/react/
 This mixin isn't really benefitial to small projects, but it can help while developing larger applications because it forces your tags to strictly define what inputs they expect from their parent tags, or application state (redux, flux, etc).
 
 ## Size
-Compressed this mixin clocks in at about 5kb <strong>BUT</strong>, really it is only benefitial for local development, so you can (and probably should) trim it out for deployment builds.
+This mixin, when compressed, clocks in at about 5kb <strong>BUT</strong>, really it is only benefitial for local development, so you can (and probably should) trim it out for deployment builds.
 
 If using webpack, [strip-loader](https://github.com/yahoo/strip-loader) and [NormalModuleReplacementPlugin](https://webpack.github.io/docs/list-of-plugins.html#normalmodulereplacementplugin) are good places to start.
 (TODO: add more documentation about how to do this...)

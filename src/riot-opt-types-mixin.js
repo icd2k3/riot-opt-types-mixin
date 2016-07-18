@@ -17,93 +17,89 @@ import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
 *       </script>
 *       <h1>Hello, {opts.name}</h1>
 *   </tag>
+*
+* TODO:
+*    - don't re-print errors that have already been displayed to user
+*    - add "tag" optType to replace "node" and "element" from ReactPropTypes
+*    - add a way to optionally disable validation for certain opt's.
+*         ^ for example: "if", "each", and other attributes that are part of Riot's helpers
 */
 
-// used for local dev tests
-const isTestEnv = window.__env && window.__env.NODE_ENV === 'test';
+let errors;
 
-// keep track of current errors and previous opts in root scope
-let prevOpts,
-    errors;
-
-function err(error) {
-
-    /* istanbul ignore next */
-    if (!isTestEnv) {
-        console.error(error);
-    }
+function appendError(e) {
     if (errors && errors.length) {
-        errors.push(error.toString());
+        errors.push(e.toString());
     } else {
-        errors = [error.toString()];
+        errors = [e.toString()];
     }
+}
+
+function printErrors() {
+    if (errors) {
+        for (let i = 0; i < errors.length; i++) {
+            console.error(errors[i]);
+        }
+    }
+}
+
+function validateOpts(optTypes, opts, tagName) {
+    // clear previous errors
+    errors = null;
+
+    // check if the tag has any opts that are NOT defined in optTypes
+    for (const key in opts) {
+        if (!optTypes.hasOwnProperty(key)
+            && key !== 'dataIs'
+            && key !== 'optTypes'
+            && key !== 'riotTag') {
+            appendError(new Error(
+                `Opt \`${key}\` was passed to tag \`${tagName}\`, but was not defined in \`optTypes\` object.`
+            ));
+        }
+    }
+
+    // validate all passed opts
+    for (const key in optTypes) {
+        if (optTypes.hasOwnProperty(key)) {
+            const error = optTypes[key](opts, key, tagName);
+
+            if (error) {
+                appendError(error);
+            }
+        }
+    }
+
+    // print errors to console
+    printErrors();
 }
 
 // riotjs mixin
 export default {
     init: function init() {
-        const tagName = this.opts.dataIs,
-            validateOpts = () => {
-                errors = null;
-
-                // lightly compare prevOpts to current opts to determine if we need to re-validate. This is pretty fast, but will only work if opts are in the same order
-                if (prevOpts && JSON.stringify(prevOpts) === JSON.stringify(this.opts)) {
-                    return;
-                }
-
-                // store prevOpts for the next time this tag is updated
-                prevOpts = Object.assign({}, this.opts);
-
-                // check if the tag has any opts that are NOT defined in optTypes
-                for (const key in this.opts) {
-                    if (!this.optTypes.hasOwnProperty(key)
-                        && key !== 'dataIs'
-                        && key !== 'optTypes'
-                        && key !== 'riotTag') {
-                        err(new Error(
-                            `opt '${key}' was not defined in <${tagName}>'s optTypes config.`
-                        ));
-                    }
-                }
-
-                // validate all passed opts
-                for (const key in this.optTypes) {
-                    if (this.optTypes.hasOwnProperty(key)) {
-                        const error = this.optTypes[key](this.opts, key, tagName);
-
-                        if (error) {
-                            err(error);
-                        }
-                    }
-                }
-            };
-
         // if mixin was instantiated, but optTypes was not provided, we need to display console error
         if (!this.optTypes) {
-            err(new Error(
-                `optTypes object was not set in the tag <${tagName}> `
+            appendError(new Error(
+                `The \`optTypes\` object was not set in the tag \`${this.opts.dataIs}\` `
                 + 'and is expected when using the mixin riot-opt-types-mixin.'
             ));
         }
 
         // validate all opts of the tag on mount and updated
         if (this.optTypes) {
-            validateOpts();
-            this.on('updated', validateOpts);
+            this.on('update', () => {
+                validateOpts(this.optTypes, this.opts, this.opts.dataIs);
+            });
         }
 
-        // clear errors and prevOpts when tag unmounts
+        // clear errors when tag unmounts
         this.on('unmount', () => {
             errors = null;
-            prevOpts = null;
         });
     },
-    getRiotOptTypesMixinErrors: () => {
 
-        /* istanbul ignore next */
-        if (!isTestEnv) {
-            console.warn('The getRiotOptTypesMixinErrors function is only intended to be used for testing purposes');
-        }
+    // returns all current optType validation errors for the tag (only intended for testing purposes)
+    getRiotOptTypesMixinErrors: () => {
         return errors;
     }
 };
