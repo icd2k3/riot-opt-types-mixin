@@ -80,20 +80,12 @@ function validateOpts(optTypes, opts, tagName) {
 // riotjs mixin
 export default {
     init: function init() {
-        // if mixin was instantiated, but optTypes was not provided, we need to display console error
-        if (!this.optTypes) {
-            appendError(new Error(
-                `The \`optTypes\` object was not set in the tag \`${this.opts.dataIs}\` `
-                + 'and is expected when using the mixin riot-opt-types-mixin.'
-            ));
-        }
-
-        // validate all opts of the tag on mount and updated
-        if (this.optTypes) {
-            this.on('update', () => {
+        // validate tag opts on update (if optTypes was provided in tag)
+        this.on('update', () => {
+            if (this.optTypes) {
                 validateOpts(this.optTypes, this.opts, this.opts.dataIs);
-            });
-        }
+            }
+        });
 
         // clear errors when tag unmounts
         this.on('unmount', () => {

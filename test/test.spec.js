@@ -90,18 +90,6 @@ describe('riot-opt-types-mixin tests', () => {
         }
     });
 
-    it('Should display error if mixin is instantiated, but optTypes is missing', (done) => {
-        tag = riot.mount(tagDom, 'test-tag', {})[0];
-
-        expect(tag.getRiotOptTypesMixinErrors()[0].toString(), 'expect error if tag is passed an opt that is not in optTypes')
-            .to.equal(new Error(
-                `The \`optTypes\` object was not set in the tag \`test-tag\` `
-                + 'and is expected when using the mixin riot-opt-types-mixin.'
-            ).toString());
-
-        done();
-    });
-
     it('Should display error if opts are passed to the tag that are NOT defined in optTypes', (done) => {
         tag = riot.mount(tagDom, 'test-tag', {
             optTypes: {},

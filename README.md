@@ -10,19 +10,27 @@ This mixin will monitor the opts being passed to your tags. If your tag is passe
 Define `this.optTypes = {}` in your riotjs tag, then include riot-opt-types-mixin as a mixin like so:
 
 #### Simple Example
-``` javascript
-import riotOptTypesMixin, { optTypes } from 'riot-opt-types-mixin';
-        
-<my-tag>
-    this.optTypes = {
-        name: optTypes.string.isRequired
-    };
 
-    this.mixin(riotOptTypesMixin);
+`index.js`:
+``` javascript
+import riotOptTypesMixin from 'riot-opt-types-mixin';
+riot.mixin(riotOptTypesMixin);  // apply mixin to all tags
+```
+`app.tag`:
+``` javascript
+import { optTypes } from 'riot-opt-types-mixin';
+<app>
+    <script>
+        // define expected opts (attributes) for your tag
+        this.optTypes = {
+            name: optTypes.string.isRequired
+        };
+    </script>
     
     <h1>Hello, {opts.name}</h1>
-</my-tag>
+</app>
 ```
+
 Now, if you pass `name` incorrectly to `<my-tag>` you get a nice descriptive error in your browser's console
 
 ```javascript
@@ -41,8 +49,6 @@ this.optTypes = {
     }),
     dispatch: optTypes.func.isRequired
 };
-
-this.mixin(riotOptTypesMixin);
 ```
 Please refer to React's PropTypes [Documentation](https://facebook.github.io/react/docs/reusable-components.html) for more info on how to use these optTypes.
 
