@@ -25,13 +25,16 @@ import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
 *         ^ for example: "if", "each", and other attributes that are part of Riot's helpers
 */
 
+// map React's propTypes to optTypes
+module.exports.optTypes = ReactPropTypes;
+
 let errors;
 
-function appendError(e) {
+function appendError(err) {
     if (errors && errors.length) {
-        errors.push(e.toString());
+        errors.push(err.toString());
     } else {
-        errors = [e.toString()];
+        errors = [err.toString()];
     }
 }
 
@@ -103,5 +106,3 @@ export default {
         return errors;
     }
 };
-
-module.exports.optTypes = ReactPropTypes;
