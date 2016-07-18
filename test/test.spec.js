@@ -90,7 +90,7 @@ describe('riot-opt-types-mixin tests', () => {
         }
     });
 
-    it('Should display error if opts are passed to the tag that are NOT defined in optTypes', (done) => {
+    it('should display error if opts are passed to the tag that are NOT defined in optTypes', (done) => {
         tag = riot.mount(tagDom, 'test-tag', {
             optTypes: {},
             testMissing: 'testMissing'
@@ -102,7 +102,7 @@ describe('riot-opt-types-mixin tests', () => {
         done();
     });
 
-    it('Should display no errors if all opts are passed as expected', (done) => {
+    it('should display no errors if all opts are passed as expected', (done) => {
         tag = riot.mount(tagDom, 'test-tag', {
             optTypes: {
                 anyTest: optTypes.any.isRequired,
@@ -140,7 +140,7 @@ describe('riot-opt-types-mixin tests', () => {
         done();
     });
 
-    it('Should display errors if opts are required, but not provided to the tag from parent', (done) => {
+    it('should display errors if opts are required, but not provided to the tag from parent', (done) => {
         expectedErrors = [
             mockIsRequiredError('anyTest'),
             mockIsRequiredError('arrayOfTest'),
@@ -180,7 +180,7 @@ describe('riot-opt-types-mixin tests', () => {
         done();
     });
 
-    it('Should display errors if opts are optional, but passed incorrectly', (done) => {
+    it('should display errors if opts are optional, but passed incorrectly', (done) => {
         expectedErrors = [
             mockInvalidArrayOfError('arrayOfTest', 'string'),
             mockInvalidTypeError('arrayTest', 'boolean', 'array'),
@@ -230,7 +230,7 @@ describe('riot-opt-types-mixin tests', () => {
         done();
     });
 
-    it('Should display errors for invalid nested optTypes', (done) => {
+    it('should display errors for invalid nested optTypes', (done) => {
         expectedErrors = [
             mockInvalidTypeError('shapeTest.shapeNestedTest', 'boolean', 'string')
         ];
@@ -251,7 +251,7 @@ describe('riot-opt-types-mixin tests', () => {
         done();
     });
 
-    it('Should return invalid optType errors if passed incorrectly', (done) => {
+    it('should return invalid optType errors if passed incorrectly', (done) => {
         expectedErrors = [
             mockInvalidOptTypeNotationError('arrayOfTest', 'arrayOf'),
             mockInvalidOptTypeNotationError('objectOfTest', 'objectOf'),
@@ -277,7 +277,7 @@ describe('riot-opt-types-mixin tests', () => {
         done();
     });
 
-    it('Should re-validate if updated and opts have changed', (done) => {
+    it('should re-validate if updated and opts have changed', (done) => {
         expectedErrors = [
             mockInvalidTypeError('stringTest', 'array', 'string')
         ];
@@ -296,6 +296,7 @@ describe('riot-opt-types-mixin tests', () => {
         ];
 
         tag.opts = {
+            riotTag: 'test-tag',
             dataIs: 'test-tag',
             stringTest: false
         };

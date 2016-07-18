@@ -28,6 +28,8 @@ import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
 // map React's propTypes to optTypes
 module.exports.optTypes = ReactPropTypes;
 
+const whitelist = 'id, class, dataIs, optTypes, riotTag';
+
 let errors;
 
 function appendError(err) {
@@ -52,10 +54,7 @@ function validateOpts(optTypes, opts, tagName) {
 
     // check if the tag has any opts that are NOT defined in optTypes
     for (const key in opts) {
-        if (!optTypes.hasOwnProperty(key)
-            && key !== 'dataIs'
-            && key !== 'optTypes'
-            && key !== 'riotTag') {
+        if (!optTypes.hasOwnProperty(key) && whitelist.indexOf(key) === -1) {
             appendError(new Error(
                 `Opt \`${key}\` was passed to tag \`${tagName}\`, but was not defined in \`optTypes\` object.`
             ));
@@ -82,7 +81,7 @@ export default {
     init: function init() {
         // validate tag opts on update (if optTypes was provided in tag)
         this.on('update', () => {
-            if (this.optTypes) {
+            if (this.optTypes && this.opts.riotTag) {
                 validateOpts(this.optTypes, this.opts, this.opts.dataIs);
             }
         });
