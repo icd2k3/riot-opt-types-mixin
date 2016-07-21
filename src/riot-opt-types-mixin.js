@@ -19,7 +19,7 @@ import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
 *   </tag>
 *
 * TODO:
-*    - don't re-print errors that have already been displayed to user
+*    - don't re-print _errors that have already been displayed to user
 *    - add "tag" optType to replace "node" and "element" from ReactPropTypes
 *    - add a way to optionally disable validation for certain opt's.
 *         ^ for example: "if", "each", and other attributes that are part of Riot's helpers
@@ -28,53 +28,61 @@ import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
 // map React's propTypes to optTypes
 module.exports.optTypes = ReactPropTypes;
 
-const whitelist = 'id, class, dataIs, optTypes, riotTag';
-
-let errors;
-
-function appendError(err) {
-    if (errors && errors.length) {
-        errors.push(err);
-    } else {
-        errors = [err];
-    }
-}
-
-function printErrors() {
-    if (errors) {
-        for (let i = 0; i < errors.length; i++) {
-            console.error(errors[i]);
+let _errors;
+const _whitelist = Object.freeze({
+        class: true,
+        dataIs: true,
+        id: true,
+        optTypes: true,
+        riotTag: true
+    }),
+    
+    // add a new error to the _errors list
+    _appendError = (err) => {
+        if (_errors && _errors.length) {
+            _errors.push(err);
+        } else {
+            _errors = [err];
         }
-    }
-}
+    },
 
-function validateOpts(optTypes, opts, tagName) {
-    // clear previous errors
-    errors = null;
-
-    // check if the tag has any opts that are NOT defined in optTypes
-    for (const key in opts) {
-        if (!optTypes.hasOwnProperty(key) && whitelist.indexOf(key) === -1) {
-            appendError(new Error(
-                `Opt \`${key}\` was passed to tag \`${tagName}\`, but was not defined in \`optTypes\` object.`
-            ));
-        }
-    }
-
-    // validate all passed opts
-    for (const key in optTypes) {
-        if (optTypes.hasOwnProperty(key)) {
-            const error = optTypes[key](opts, key, tagName);
-
-            if (error) {
-                appendError(error);
+    // console log all _errors in the list above
+    _printErrors = () => {
+        if (_errors) {
+            for (let i = 0; i < _errors.length; i++) {
+                console.error(_errors[i]);
             }
         }
-    }
+    },
 
-    // print errors to console
-    printErrors();
-}
+    // validate all opts the tag was passed (excluding '_whitelist') based on optTypes rules
+    _validateOpts = (optTypes, opts, tagName) => {
+        // clear previous _errors
+        _errors = null;
+
+        // check if the tag has any opts that are NOT defined in optTypes
+        for (const key in opts) {
+            if (!optTypes.hasOwnProperty(key) && !_whitelist[key]) {
+                _appendError(new Error(
+                    `Opt \`${key}\` was passed to tag \`${tagName}\`, but was not defined in \`optTypes\` object.`
+                ));
+            }
+        }
+
+        // validate all passed opts
+        for (const key in optTypes) {
+            if (optTypes.hasOwnProperty(key)) {
+                const err = optTypes[key](opts, key, tagName);
+
+                if (err) {
+                    _appendError(err);
+                }
+            }
+        }
+
+        // print _errors to console
+        _printErrors();
+    };
 
 // riotjs mixin
 export default {
@@ -82,18 +90,18 @@ export default {
         // validate tag opts on update (if optTypes was provided in tag)
         this.on('update', () => {
             if (this.optTypes && (this.opts.riotTag || this.opts.dataIs)) {
-                validateOpts(this.optTypes, this.opts, this.opts.dataIs);
+                _validateOpts(this.optTypes, this.opts, this.opts.dataIs);
             }
         });
 
-        // clear errors when tag unmounts
+        // clear _errors when tag unmounts
         this.on('unmount', () => {
-            errors = null;
+            _errors = null;
         });
     },
 
-    // returns all current optType validation errors for the tag (only intended for testing purposes)
+    // returns all current optType validation _errors for the tag (only intended for testing purposes)
     getRiotOptTypesMixinErrors: () => {
-        return errors;
+        return _errors;
     }
 };

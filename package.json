@@ -1,6 +1,6 @@
 {
   "name": "riot-opt-types-mixin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A direct port of React's PropTypes for Riot tags",
   "files": [
     "lib/riot-opt-types-mixin.js"
