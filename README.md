@@ -19,7 +19,7 @@ riot.mixin(riotOptTypesMixin);  // apply mixin to all tags
 `app.tag`:
 ``` javascript
 import { optTypes } from 'riot-opt-types-mixin';
-<app>
+<my-tag>
     <script>
         // define expected opts (attributes) for your tag
         this.optTypes = {
@@ -28,7 +28,7 @@ import { optTypes } from 'riot-opt-types-mixin';
     </script>
     
     <h1>Hello, {opts.name}</h1>
-</app>
+</my-tag>
 ```
 
 Now, if you pass `name` incorrectly to `<my-tag>` you get a nice descriptive error in your browser's console
