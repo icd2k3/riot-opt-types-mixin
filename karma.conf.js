@@ -54,6 +54,7 @@ module.exports = function(config) {
             options: {
                 type: 'babel'
             }
-        }
+        },
+        singleRun: true
     })
 }
