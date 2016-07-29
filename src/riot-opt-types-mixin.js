@@ -80,7 +80,7 @@ const _whitelist = Object.freeze({
             }
         }
 
-        // print _errors to console
+        // print any _errors to console
         _printErrors();
     };
 

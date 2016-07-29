@@ -2,7 +2,10 @@ import { optTypes } from '../lib/riot-opt-types-mixin.js';
 import './test.tag';
 
 describe('riot-opt-types-mixin tests', () => {
-    const mockIsRequiredError = (optName) => {
+    const createError = (str) => {
+            return new Error(str).toString();
+        },
+        mockIsRequiredError = (optName) => {
             return new Error(
                 `Required opt \`${optName}\` was not specified in `
                 + `\`test-tag\`.`
