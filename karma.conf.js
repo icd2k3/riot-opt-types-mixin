@@ -34,6 +34,7 @@ module.exports = function(config) {
             'karma-env',
             'karma-babel-preprocessor',
             'karma-commonjs',
+            'karma-coveralls',
             'karma-coverage',
             'karma-mocha',
             'karma-chai',
@@ -41,11 +42,13 @@ module.exports = function(config) {
             'karma-phantomjs-launcher',
             'karma-riot'
         ],
-        reporters: ['mocha', 'progress', 'coverage'],
+        reporters: ['mocha', 'progress', 'coverage', 'coveralls'],
         coverageReporter: {
-            type: 'html',
             dir: 'test-coverage-report/',
-            subdir: 'report'
+            reporters: [
+                {type: 'html', subdir: 'html'},
+                {type: 'lcov', subdir: 'lcov'}
+            ]
         },
         commonjsPreprocessor: {
             modulesRoot: 'test'
