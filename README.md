@@ -1,3 +1,5 @@
+![Travis](https://travis-ci.org/icd2k3/riot-opt-types-mixin.svg?branch=master)
+
 # riot-opt-types-mixin
 > A direct port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
 
