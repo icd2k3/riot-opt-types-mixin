@@ -1,48 +1,43 @@
+var webpack = require('webpack'),
+    webpackConfig = require('./webpack.config.js');
+
 module.exports = function(config) {
+    const preprocessors = {};
+    preprocessors['webpack.test.context.js'] = ['webpack'];
+
     config.set({
         basePath: '',
         browsers: ['PhantomJS'],
+        singleRun: true,
         files: [
             'node_modules/babel-polyfill/dist/polyfill.js',
-            'test/**/*.tag',
-            'test/**/*.js',
-            'lib/riot-opt-types-mixin.js'
+            'webpack.test.context.js'
         ],
         frameworks: [
-            'env',
-            'commonjs',
             'mocha',
-            'chai',
-            'riot'
+            'chai'
         ],
-        preprocessors: {
-            'test/**/*.tag': ['riot', 'babel', 'commonjs'],
-            'test/**/*.js': ['babel', 'commonjs'],
-            'lib/riot-opt-types-mixin.js': ['commonjs', 'coverage']
-        },
+        preprocessors,
         babelPreprocessor: {
             options: {
                 presets: ['es2015']
-            },
-        },
-        client: {
-            env: {
-                NODE_ENV: 'test'
             }
         },
         plugins: [
-            'karma-env',
-            'karma-babel-preprocessor',
-            'karma-commonjs',
-            'karma-coveralls',
-            'karma-coverage',
-            'karma-mocha',
             'karma-chai',
+            'karma-coverage',
+            'karma-coveralls',
+            'karma-mocha',
             'karma-mocha-reporter',
             'karma-phantomjs-launcher',
-            'karma-riot'
+            'karma-webpack'
         ],
-        reporters: ['mocha', 'progress', 'coverage', 'coveralls'],
+        reporters: [
+            'mocha',
+            'progress',
+            'coverage',
+            'coveralls'
+        ],
         coverageReporter: {
             dir: 'test-coverage-report/',
             reporters: [
@@ -50,14 +45,9 @@ module.exports = function(config) {
                 {type: 'lcov', subdir: 'lcov'}
             ]
         },
-        commonjsPreprocessor: {
-            modulesRoot: 'test'
-        },
-        riotPreprocessor: {
-            options: {
-                type: 'babel'
-            }
-        },
-        singleRun: true
+        webpack: webpackConfig,
+        webpackServer: {
+            noInfo: true  // don't spam console when running app in karma
+        }
     })
 }

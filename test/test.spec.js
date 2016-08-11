@@ -75,7 +75,7 @@ describe('riot-opt-types-mixin tests', () => {
             }
         };
 
-    class TestInstance {};
+    class TestInstance { constructor() {} };
 
     let tagDom,
         tag,
@@ -302,6 +302,26 @@ describe('riot-opt-types-mixin tests', () => {
             stringTest: false
         });
         tag.update();
+
+        validateErrors();
+
+        done();
+    });
+
+    it('should display precice type (date & regexp) for objects', (done) => {
+        expectedErrors = [
+            mockInvalidTypeError('boolTest', 'date', 'boolean'),
+            mockInvalidTypeError('stringTest', 'regexp', 'string')
+        ];
+
+        tag = riot.mount(tagDom, 'test-tag', {
+            optTypes: {
+                boolTest: optTypes.bool,
+                stringTest: optTypes.string
+            },
+            boolTest: new Date(),
+            stringTest: new RegExp(/testregexp/g)
+        })[0];
 
         validateErrors();
 

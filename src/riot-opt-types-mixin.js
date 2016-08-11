@@ -25,14 +25,20 @@ import ReactPropTypes from '../node_modules/react/lib/ReactPropTypes.js';
 *         ^ for example: "if", "each", and other attributes that are part of Riot's helpers
 */
 
+
 // map React's propTypes to optTypes
 module.exports.optTypes = ReactPropTypes;
 
+// any validation errors found will be stored here as an array
 let _errors;
+
+// whitelist some opts that are part of the riot api (no need to validate these)
 const _whitelist = Object.freeze({
         class: true,
         dataIs: true,
+        each: true,
         id: true,
+        if: true,
         optTypes: true,
         riotTag: true
     }),
@@ -72,6 +78,7 @@ const _whitelist = Object.freeze({
         // validate all passed opts
         for (const key in optTypes) {
             if (optTypes.hasOwnProperty(key)) {
+                // this is where opt is actually sent and validated with ReactPropTypes
                 const err = optTypes[key](opts, key, tagName);
 
                 if (err) {
