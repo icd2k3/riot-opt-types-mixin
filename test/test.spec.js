@@ -75,7 +75,7 @@ describe('riot-opt-types-mixin tests', () => {
             }
         };
 
-    class TestInstance { constructor() {} };
+    class TestInstance {};
 
     let tagDom,
         tag,
@@ -120,7 +120,8 @@ describe('riot-opt-types-mixin tests', () => {
                 oneOfTest: optTypes.oneOf(['mock']).isRequired,
                 oneOfTypeTest: optTypes.oneOfType([optTypes.number, optTypes.string]).isRequired,
                 shapeTest: optTypes.shape({mock: optTypes.string.isRequired}).isRequired,
-                stringTest: optTypes.string.isRequired
+                stringTest: optTypes.string.isRequired,
+                symbolTest: optTypes.symbol.isRequired
             },
             anyTest: 'mock',
             arrayOfTest: [1],
@@ -134,7 +135,8 @@ describe('riot-opt-types-mixin tests', () => {
             oneOfTest: 'mock',
             oneOfTypeTest: 'mock',
             shapeTest: {mock: 'mock'},
-            stringTest: 'mock'
+            stringTest: 'mock',
+            symbolTest: Symbol('symbol')
         })[0];
 
         expect(tag.getRiotOptTypesMixinErrors(), 'no errors expected')
@@ -235,14 +237,22 @@ describe('riot-opt-types-mixin tests', () => {
 
     it('should display errors for invalid nested optTypes', (done) => {
         expectedErrors = [
+            mockInvalidTypeError('arrayOfTest[0]', 'string', 'number'),
+            mockInvalidTypeError('objectOfTest.mock', 'string', 'number'),
             mockInvalidTypeError('shapeTest.shapeNestedTest', 'boolean', 'string')
         ];
 
         tag = riot.mount(tagDom, 'test-tag', {
             optTypes: {
+                arrayOfTest: optTypes.arrayOf(optTypes.number),
+                objectOfTest: optTypes.objectOf(optTypes.number),
                 shapeTest: optTypes.shape({
                     shapeNestedTest: optTypes.string.isRequired
                 }).isRequired
+            },
+            arrayOfTest: ['mock'],
+            objectOfTest: {
+                mock: 'mock'
             },
             shapeTest: {
                 shapeNestedTest: false
