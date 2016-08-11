@@ -1,17 +1,18 @@
-var webpack = require('webpack'),
+var configFile = require('./configFile.js'),
+    webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js');
 
 module.exports = function(config) {
     const preprocessors = {};
-    preprocessors['webpack.test.context.js'] = ['webpack'];
+    preprocessors[configFile.webpack_test_context_file] = ['webpack'];
 
     config.set({
         basePath: '',
         browsers: ['PhantomJS'],
         singleRun: true,
         files: [
-            'node_modules/babel-polyfill/dist/polyfill.js',
-            'webpack.test.context.js'
+            configFile.babel_polyfill_path,
+            configFile.webpack_test_context_file
         ],
         frameworks: [
             'mocha',
@@ -39,7 +40,7 @@ module.exports = function(config) {
             'coveralls'
         ],
         coverageReporter: {
-            dir: 'test-coverage-report/',
+            dir: configFile.test_report_path,
             reporters: [
                 {type: 'html', subdir: 'html'},
                 {type: 'lcov', subdir: 'lcov'}

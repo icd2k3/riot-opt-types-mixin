@@ -1,6 +1,7 @@
 "use strict";
 
-var stringReplacePlugin = require('string-replace-webpack-plugin'),
+var configFile = require('./configFile'),
+    stringReplacePlugin = require('string-replace-webpack-plugin'),
     path = require('path'),
     clean = require('clean-webpack-plugin'),
     TEST_REPORT = path.resolve(__dirname, 'test-coverage-report');
@@ -12,7 +13,7 @@ module.exports = {
 		// this loader allows istanbul code coverage reported to ignore code that is added from Babel
 		loaders: [
 			{
-                test: /lib\/riot-opt-types-mixin\.js$/,
+                test: configFile.lib_riot_opt_types_mixin_regex,
                 loader: stringReplacePlugin.replace({
                     /*
                     *  These replacements tell test coverage reports to ignore code that has been compiled & added
@@ -44,7 +45,7 @@ module.exports = {
         // this is necessary or else test report will be for entire webpack bundle instead of each component
         postLoaders: [
             {
-                test: /lib\/riot-opt-types-mixin\.js$/,
+                test: configFile.lib_riot_opt_types_mixin_regex,
                 loader: 'istanbul-instrumenter'
             }
         ]
@@ -52,7 +53,7 @@ module.exports = {
 	// init string replace plugin for babel omissions above
 	plugins: [
         new clean([
-            TEST_REPORT
+            path.resolve(__dirname, configFile.test_report_path)
         ]),
 		new stringReplacePlugin()
 	]
