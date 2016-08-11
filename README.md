@@ -1,4 +1,4 @@
-![Travis](https://travis-ci.org/icd2k3/riot-opt-types-mixin.svg?branch=master)
+<a href="https://david-dm.org/icd2k3/react-redux-slideshow-example/?type=dev">![David](https://david-dm.org/icd2k3/react-redux-slideshow-example/dev-status.svg)</a> ![Travis](https://travis-ci.org/icd2k3/riot-opt-types-mixin.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/icd2k3/riot-opt-types-mixin/badge.svg?branch=master)](https://coveralls.io/github/icd2k3/riot-opt-types-mixin?branch=master)
 
 # riot-opt-types-mixin
 > A direct port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
