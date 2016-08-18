@@ -33,10 +33,10 @@ import { optTypes } from 'riot-opt-types-mixin';
 </app>
 ```
 
-Now, if you pass `name` incorrectly to `<my-tag>` you get a nice descriptive error in your browser's console
+Now, if you pass `name` incorrectly to `<app>` you get a nice descriptive error in your browser's console
 
 ```javascript
-<app name={100}/> = Invalid opt 'name' of type 'number' supplied to 'my-tag', expected 'string'.
+<app name={100}/> = Invalid opt 'name' of type 'number' supplied to 'app', expected 'string'.
 ```
 
 #### Advanced Example
