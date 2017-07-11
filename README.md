@@ -1,5 +1,8 @@
 <a href="https://david-dm.org/icd2k3/react-redux-slideshow-example/?type=dev">![David](https://david-dm.org/icd2k3/react-redux-slideshow-example/dev-status.svg)</a> ![Travis](https://travis-ci.org/icd2k3/riot-opt-types-mixin.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/icd2k3/riot-opt-types-mixin/badge.svg?branch=master)](https://coveralls.io/github/icd2k3/riot-opt-types-mixin?branch=master)
 
+# Deprecation Notice
+React has separated prop types into a standalone module https://www.npmjs.com/package/prop-types that can be used anywhere. I recommend installing this module and applying it via a riot mixin
+
 # riot-opt-types-mixin
 > A direct port of [React](https://facebook.github.io/react/)'s [PropTypes](https://facebook.github.io/react/docs/reusable-components.html) for usage in [Riot](http://riotjs.com) tags.
 
